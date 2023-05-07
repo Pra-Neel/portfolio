@@ -5,9 +5,12 @@ import custom_auth
 from django.contrib.auth import authenticate, login, logout
 
 
+
 # Create your views here.
 
 def login(request):
     if request.method == 'GET':
-        return render(request, 'user/login.html')
+        return render(request, 'login.html')
+
+
 

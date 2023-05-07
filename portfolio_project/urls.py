@@ -15,9 +15,11 @@ Including another URLconf
 """
 #from custom_auth import views
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static 
 from django.urls import path, include #includes ley sabai apps ko urls lai link garcha
 
-urlpatterns = [
+urlpatterns = [ 
     path('admin/', admin.site.urls),
     path('', include('custom_auth.urls')) #yesma apps ko url pattern add gareko
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) #to access static files where css and js images are kept
