@@ -2,7 +2,10 @@ from django.shortcuts import render, redirect
 from django.http import request
 from django.http import HttpResponse
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate
+from django.contrib.auth import login as user_login
+from django.contrib.auth import login as user_logout
+from django.contrib import messages
 
 
 
@@ -10,14 +13,15 @@ from django.contrib.auth import authenticate, login, logout
 
 def login(request):
     if request.method == 'POST': 
-        username = request.POST[username]
-        password = request.POST[password]
+        username = request.POST['username']
+        password = request.POST['password']
         user = authenticate(username=username, password=password)
         if user is not None:
-            login(request, user )
+            user_login(request, user )
+            messages.success(request, 'Login successfully')
             return redirect('/home')
         else:
-            return HttpResponse('Login error')
+            messages.error(request, "Loginerror")
     else:
         return render(request, 'login.html')
     
@@ -36,8 +40,16 @@ def signup(request):
             user = User.objects.create_user( username=username, email=email, password=password)
             return redirect('/login')
         else:
-            return HttpResponse('password not matched.')
+            messages.error(request, 'Passwords do not matched.')
         
     return render(request, 'signup.html')
 
 
+def home(request):
+    return render(request, 'home.html')
+
+
+def logout(request):
+    user_logout(request)
+    messages.success(request, 'User loggedout Successfully')
+    return redirect('/login')

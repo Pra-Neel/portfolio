@@ -3,18 +3,29 @@
 {% block title %} Login {% endblock title %}
 
 {% block content %}
+
+{%if messgaes%}
+<ul>
+  {%for message in messages%}
+  <script>
+    alter("{{message}}");
+  </script>
+  {%endfor%}
+</ul>
+{%endif%}
+
 <form method="POST">
     {% csrf_token %}
 
         <!-- Email input -->
         <div class="form-outline mb-4">
-          <input type="email" id="form2Example1" class="form-control" />
+          <input type="text" id="username", name ="username" class="form-control" />
           <label class="form-label" for="form2Example1">Username </label>
         </div>
       
         <!-- Password input -->
         <div class="form-outline mb-4">
-          <input type="password" id="form2Example2" class="form-control" />
+          <input type="password" id="password", name="password" class="form-control" />
           <label class="form-label" for="form2Example2">Password</label>
         </div>
       
@@ -35,11 +46,11 @@
         </div>
       
         <!-- Submit button -->
-        <button type="button" class="btn btn-primary btn-block mb-4">Login </button>
+        <button type="submit" class="btn btn-primary btn-block mb-4">Login </button>
       
         <!-- Register buttons -->
         <div class="text-center">
-          <p>Not a member? <a href="#!">Register</a></p>
+          <p>Not a member? <a href="{% url 'signup' %}">Register</a></p>
           <p>or sign up with:</p>
           {% comment %} <button type="button" class="btn btn-link btn-floating mx-1">
             <i class="fab fa-facebook-f"></i>
