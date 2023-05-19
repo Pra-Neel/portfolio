@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as user_login
-from django.contrib.auth import login as user_logout
+from django.contrib.auth import logout as user_logout
 from django.contrib import messages
 
 
@@ -22,6 +22,7 @@ def login(request):
             return redirect('/home')
         else:
             messages.error(request, "Loginerror")
+            return render(request, 'login.html')
     else:
         return render(request, 'login.html')
     
@@ -38,6 +39,7 @@ def signup(request):
     
         if password == confirm_password:
             user = User.objects.create_user( username=username, email=email, password=password)
+            user.save()
             return redirect('/login')
         else:
             messages.error(request, 'Passwords do not matched.')
@@ -53,3 +55,6 @@ def logout(request):
     user_logout(request)
     messages.success(request, 'User loggedout Successfully')
     return redirect('/login')
+
+def contact(request):
+    return render(request, 'contact.html')
