@@ -56,5 +56,3 @@ def logout(request):
     messages.success(request, 'User loggedout Successfully')
     return redirect('/login')
 
-def contact(request):
-    return render(request, 'contact.html')
